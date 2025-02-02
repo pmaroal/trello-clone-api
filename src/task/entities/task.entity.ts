@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Board } from './board.entity';
+import { Board } from '../../board/entities/board.entity';
 
 @Entity()
 export class Task {
