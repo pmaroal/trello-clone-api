@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { BoardModule } from './board/board.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -16,9 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: process.env.DB_NAME,
       autoLoadEntities: true, //  Carga las entidades registradas
       synchronize: true, //  Crea/Modifica la estructura de la base de datos (NO USAR EN PRODUCCIÓN)
-    }),
+    }), BoardModule, TaskModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
