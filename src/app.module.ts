@@ -8,15 +8,17 @@ import { TaskModule } from './task/task.module';
   imports: [
     ConfigModule.forRoot(), //  Carga las variables de entorno desde .env
     TypeOrmModule.forRoot({
-      type: 'postgres', //  Definimos que vamos a usar PostgreSQL
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT),
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      autoLoadEntities: true, //  Carga las entidades registradas
+      type: 'postgres',
+      host: process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DB_PORT, 10) || 5432,
+      username: process.env.DB_USER || 'user',
+      password: process.env.DB_PASSWORD || 'password',
+      database: process.env.DB_NAME || 'trello-clone',
+      autoLoadEntities: true,
       synchronize: true, //  Crea/Modifica la estructura de la base de datos (NO USAR EN PRODUCCIÓN)
-    }), BoardModule, TaskModule,
+    }),
+    BoardModule,
+    TaskModule,
   ],
 })
 export class AppModule {}
