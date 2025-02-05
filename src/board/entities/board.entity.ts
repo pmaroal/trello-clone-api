@@ -7,7 +7,7 @@ export class Board {
   id: number; // ID único del Board
 
   @Column()
-  title: string;
+  name: string;
   // Título de la tabla (Board)
 
   @OneToMany(() => Task, (task) => task.board, { cascade: true })

@@ -16,8 +16,8 @@ export class BoardService {
   }
 
   // Función para insertar un nuevo board
-  async createBoard(title: string): Promise<Board> {
-    const newBoard = this.boardRepository.create({ title }); // Usamos el create para crear una nueva instancia
+  async createBoard(name: string): Promise<Board> {
+    const newBoard = this.boardRepository.create({ name }); // Usamos el create para crear una nueva instancia
     return this.boardRepository.save(newBoard); // Guardamos el board en la base de datos
   }
 }
