@@ -35,4 +35,10 @@ export class TaskService {
 
     return this.taskRepository.save(newTask);
   }
+
+  async getTasksByBoard(boardId: number): Promise<Task[]> {
+    return this.taskRepository.find({
+      where: { board: { id: boardId } },
+    });
+  }
 }

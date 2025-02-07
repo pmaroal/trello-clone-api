@@ -1,4 +1,11 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Query,
+  BadRequestException,
+} from '@nestjs/common';
 import { TaskService } from './task.service';
 import { Task } from './entities/task.entity';
 
@@ -13,5 +20,12 @@ export class TaskController {
     @Body('description') description?: string,
   ): Promise<Task> {
     return this.taskService.createTask(name, boardId, description);
+  }
+  @Get()
+  async getTasks(@Query('boardId') boardId: number) {
+    if (!boardId) {
+      throw new BadRequestException('boardId is required');
+    }
+    return this.taskService.getTasksByBoard(boardId);
   }
 }
