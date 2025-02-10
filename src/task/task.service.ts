@@ -35,6 +35,9 @@ export class TaskService {
 
     return this.taskRepository.save(newTask);
   }
+  async getAllTasks(): Promise<Task[]> {
+    return this.taskRepository.find();
+  }
 
   async getTasksByBoard(boardId: number): Promise<Task[]> {
     return this.taskRepository.find({

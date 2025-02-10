@@ -25,6 +25,11 @@ export class TaskController {
     return this.taskService.createTask(name, boardId, description);
   }
 
+  @Get('all')
+  async getAllTasks() {
+    return this.taskService.getAllTasks();
+  }
+
   @Get('board/:boardId')
   async getTasksByBoard(@Param('boardId') boardId: number) {
     if (!boardId) {
