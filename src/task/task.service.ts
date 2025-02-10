@@ -41,4 +41,11 @@ export class TaskService {
       where: { board: { id: boardId } },
     });
   }
+
+  async deleteTask(taskId: number): Promise<void> {
+    const result = await this.taskRepository.delete(taskId);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Task with ID ${taskId} not found`);
+    }
+  }
 }

@@ -6,6 +6,8 @@ import {
   Query,
   BadRequestException,
   Param,
+  Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { Task } from './entities/task.entity';
@@ -29,5 +31,11 @@ export class TaskController {
       throw new BadRequestException('boardId is required');
     }
     return this.taskService.getTasksByBoard(boardId);
+  }
+
+  @Delete(':id')
+  async deleteTask(@Param('id', ParseIntPipe) id: number) {
+    await this.taskService.deleteTask(id);
+    return { message: 'Task deleted successfully' };
   }
 }
