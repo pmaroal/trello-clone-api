@@ -51,4 +51,15 @@ export class TaskService {
       throw new NotFoundException(`Task with ID ${taskId} not found`);
     }
   }
+
+  async updateTask(id: number, updateData: Partial<Task>): Promise<Task> {
+    const task = await this.taskRepository.findOne({ where: { id } });
+
+    if (!task) {
+      throw new NotFoundException(`Task with ID ${id} not found`);
+    }
+
+    Object.assign(task, updateData); // Actualiza solo los campos enviados
+    return this.taskRepository.save(task);
+  }
 }
