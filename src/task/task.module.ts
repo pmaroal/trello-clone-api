@@ -6,7 +6,7 @@ import { Task } from './entities/task.entity';
 import { BoardModule } from 'src/board/board.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Task, BoardModule])], // Registrar Task en TypeOrm
+  imports: [TypeOrmModule.forFeature([Task]), BoardModule], 
 
   controllers: [TaskController],
   providers: [TaskService],
