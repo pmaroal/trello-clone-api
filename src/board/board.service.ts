@@ -18,6 +18,10 @@ export class BoardService {
     const newBoard = this.boardRepository.create({ name }); // Usamos el create para crear una nueva instancia
     return this.boardRepository.save(newBoard); // Guardamos el board en la base de datos
   }
+  async findOne(id: number): Promise<Board | null> {
+    return this.boardRepository.findOne({ where: { id } });
+  }
+  
   async deleteBoard(boardId: number): Promise<void> {
     const board = await this.boardRepository.findOne({
       where: { id: boardId },

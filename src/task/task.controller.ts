@@ -9,13 +9,17 @@ import {
   Delete,
   ParseIntPipe,
   Patch,
+  NotFoundException,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { Task } from './entities/task.entity';
+import { BoardService } from 'src/board/board.service';
 
 @Controller('task')
 export class TaskController {
-  constructor(private readonly taskService: TaskService) {}
+  constructor(private readonly taskService: TaskService,     
+    private readonly boardService: BoardService // Inyectamos BoardService
+  ) {}
 
   @Post()
   async createTask(
@@ -38,6 +42,31 @@ export class TaskController {
     }
     return this.taskService.getTasksByBoard(boardId);
   }
+
+
+  @Patch(':taskId')
+  async updateTaskBoard(
+    @Param('taskId') taskId: string,
+    @Body() body: { boardId: number } // Aseguramos que boardId sea de tipo number
+  ): Promise<Task> {
+    const task = await this.taskService.findOne(taskId);
+    if (!task) {
+      throw new NotFoundException('Task not found');
+    }
+  
+    // Buscar el board al que se quiere mover la task
+    const board = await this.boardService.findOne(body.boardId);
+    if (!board) {
+      throw new NotFoundException('Board not found');
+    }
+  
+    // Asignar el nuevo board a la task
+    task.board = board;
+  
+    // Guardar la task actualizada
+    return this.taskService.update(taskId, task);
+  }
+  
 
   @Delete(':id')
   async deleteTask(@Param('id', ParseIntPipe) id: number) {

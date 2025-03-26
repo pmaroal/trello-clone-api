@@ -62,4 +62,13 @@ export class TaskService {
     Object.assign(task, updateData); // Actualiza solo los campos enviados
     return this.taskRepository.save(task);
   }
+  
+  async findOne(taskId: string): Promise<Task | undefined> {
+    const taskIdNumber = Number(taskId); // O parseInt(taskId)
+    return this.taskRepository.findOneBy({ id: taskIdNumber });
+  }
+  // Actualizar la task
+  async update(taskId: string, task: Task): Promise<Task> {
+    return this.taskRepository.save(task);  // Guardar la task con el nuevo boardId
+  }
 }

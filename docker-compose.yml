@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17
+    container_name: trello-clone-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: trello-clone
+    ports:
+      - "5432:5432"
+    volumes:
+      - trello-clone-data:/var/lib/postgresql/data
+
+volumes:
+  trello-clone-data:
